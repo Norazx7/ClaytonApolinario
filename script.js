@@ -1,4 +1,258 @@
 // Mobile Menu Toggle
+function initLuxuryBackground() {
+    const canvas = document.getElementById('luxury-bg');
+    if (!canvas) return;
+
+    const context = canvas.getContext('2d', { alpha: true });
+    if (!context) return;
+
+    const state = {
+        width: 0,
+        height: 0,
+        dpr: 1,
+        dustParticles: [],
+        glowParticles: [],
+        nebulas: [],
+        pointer: { x: 0, y: 0, targetX: 0, targetY: 0, active: false },
+        animationId: null,
+        running: true,
+    };
+
+    const MAX_DPR = 2;
+
+    const createParticle = (isGlow = false) => {
+        const width = state.width;
+        const height = state.height;
+
+        return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * (isGlow ? 0.03 : 0.08),
+            vy: (Math.random() - 0.5) * (isGlow ? 0.03 : 0.08),
+            radius: isGlow ? 1.4 + Math.random() * 2.8 : 0.4 + Math.random() * 1.6,
+            alpha: isGlow ? 0.45 + Math.random() * 0.5 : 0.22 + Math.random() * 0.58,
+            twinkleSpeed: 0.0015 + Math.random() * 0.004,
+            twinkleOffset: Math.random() * Math.PI * 2,
+            drift: 0.0005 + Math.random() * 0.0015,
+        };
+    };
+
+    const createNebula = () => ({
+        x: Math.random() * state.width,
+        y: Math.random() * state.height,
+        radius: Math.min(state.width, state.height) * (0.18 + Math.random() * 0.2),
+        alpha: 0.05 + Math.random() * 0.08,
+        speedX: (Math.random() - 0.5) * 0.03,
+        speedY: (Math.random() - 0.5) * 0.03,
+    });
+
+    const setupCanvas = () => {
+        state.dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+        state.width = window.innerWidth;
+        state.height = window.innerHeight;
+
+        canvas.width = Math.floor(state.width * state.dpr);
+        canvas.height = Math.floor(state.height * state.dpr);
+        canvas.style.width = `${state.width}px`;
+        canvas.style.height = `${state.height}px`;
+
+        context.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+
+        const area = state.width * state.height;
+        const dustCount = Math.max(90, Math.min(260, Math.floor(area / 8500)));
+        const glowCount = Math.max(14, Math.min(42, Math.floor(area / 50000)));
+        const nebulaCount = Math.max(2, Math.min(5, Math.floor(area / 350000)));
+
+        state.dustParticles = Array.from({ length: dustCount }, () => createParticle(false));
+        state.glowParticles = Array.from({ length: glowCount }, () => createParticle(true));
+        state.nebulas = Array.from({ length: nebulaCount }, createNebula);
+        state.pointer.x = state.width * 0.5;
+        state.pointer.y = state.height * 0.45;
+        state.pointer.targetX = state.pointer.x;
+        state.pointer.targetY = state.pointer.y;
+    };
+
+    const wrapParticle = (particle) => {
+        if (particle.x < -40) particle.x = state.width + 40;
+        if (particle.x > state.width + 40) particle.x = -40;
+        if (particle.y < -40) particle.y = state.height + 40;
+        if (particle.y > state.height + 40) particle.y = -40;
+    };
+
+    const drawNebulas = () => {
+        state.nebulas.forEach((nebula) => {
+            nebula.x += nebula.speedX;
+            nebula.y += nebula.speedY;
+
+            if (nebula.x < -nebula.radius) nebula.x = state.width + nebula.radius;
+            if (nebula.x > state.width + nebula.radius) nebula.x = -nebula.radius;
+            if (nebula.y < -nebula.radius) nebula.y = state.height + nebula.radius;
+            if (nebula.y > state.height + nebula.radius) nebula.y = -nebula.radius;
+
+            const gradient = context.createRadialGradient(
+                nebula.x,
+                nebula.y,
+                0,
+                nebula.x,
+                nebula.y,
+                nebula.radius
+            );
+
+            gradient.addColorStop(0, `rgba(255, 210, 120, ${nebula.alpha})`);
+            gradient.addColorStop(1, 'rgba(255, 180, 70, 0)');
+
+            context.fillStyle = gradient;
+            context.beginPath();
+            context.arc(nebula.x, nebula.y, nebula.radius, 0, Math.PI * 2);
+            context.fill();
+        });
+    };
+
+    const drawParticleGroup = (particles, time, isGlow = false) => {
+        particles.forEach((particle) => {
+            particle.x += particle.vx + Math.sin(time * particle.drift) * 0.03;
+            particle.y += particle.vy + Math.cos(time * particle.drift) * 0.03;
+
+            if (isGlow) {
+                const dxPointer = state.pointer.x - particle.x;
+                const dyPointer = state.pointer.y - particle.y;
+                const distanceSq = dxPointer * dxPointer + dyPointer * dyPointer;
+                const influenceRadiusSq = 260 * 260;
+
+                if (distanceSq < influenceRadiusSq) {
+                    const pull = (1 - distanceSq / influenceRadiusSq) * 0.016;
+                    particle.x += dxPointer * pull;
+                    particle.y += dyPointer * pull;
+                }
+            }
+
+            wrapParticle(particle);
+
+            const twinkle = 0.72 + 0.28 * Math.sin(time * particle.twinkleSpeed + particle.twinkleOffset);
+            const alpha = particle.alpha * twinkle;
+
+            context.beginPath();
+            context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+
+            if (isGlow) {
+                context.shadowBlur = 22;
+                context.shadowColor = 'rgba(255, 210, 120, 0.95)';
+                context.fillStyle = `rgba(255, 218, 135, ${alpha})`;
+            } else {
+                context.shadowBlur = 0;
+                context.fillStyle = `rgba(240, 190, 95, ${alpha})`;
+            }
+
+            context.fill();
+        });
+    };
+
+    const render = (timestamp) => {
+        if (!state.running) return;
+
+        const time = timestamp || performance.now();
+        context.clearRect(0, 0, state.width, state.height);
+
+        state.pointer.x += (state.pointer.targetX - state.pointer.x) * 0.05;
+        state.pointer.y += (state.pointer.targetY - state.pointer.y) * 0.05;
+
+        const centerX = state.width * 0.5;
+        const centerY = state.height * 0.45;
+        const pulse = 0.12 + 0.05 * (0.5 + 0.5 * Math.sin(time * 0.00045));
+        const centerGradient = context.createRadialGradient(
+            centerX,
+            centerY,
+            0,
+            centerX,
+            centerY,
+            Math.max(state.width, state.height) * 0.65
+        );
+        centerGradient.addColorStop(0, `rgba(255, 208, 118, ${pulse})`);
+        centerGradient.addColorStop(0.45, 'rgba(255, 185, 80, 0.05)');
+        centerGradient.addColorStop(1, 'rgba(8, 8, 8, 0)');
+
+        context.fillStyle = centerGradient;
+        context.fillRect(0, 0, state.width, state.height);
+
+        const pointerGlow = context.createRadialGradient(
+            state.pointer.x,
+            state.pointer.y,
+            0,
+            state.pointer.x,
+            state.pointer.y,
+            state.pointer.active ? 230 : 160
+        );
+        pointerGlow.addColorStop(0, state.pointer.active ? 'rgba(255, 219, 138, 0.2)' : 'rgba(255, 205, 110, 0.11)');
+        pointerGlow.addColorStop(1, 'rgba(255, 180, 70, 0)');
+        context.fillStyle = pointerGlow;
+        context.fillRect(0, 0, state.width, state.height);
+
+        drawNebulas();
+
+        context.globalCompositeOperation = 'screen';
+        drawParticleGroup(state.dustParticles, time, false);
+        drawParticleGroup(state.glowParticles, time, true);
+        context.globalCompositeOperation = 'source-over';
+        context.shadowBlur = 0;
+
+        state.animationId = requestAnimationFrame(render);
+    };
+
+    const handleVisibility = () => {
+        state.running = !document.hidden;
+        if (state.running) {
+            cancelAnimationFrame(state.animationId);
+            state.animationId = requestAnimationFrame(render);
+        } else {
+            cancelAnimationFrame(state.animationId);
+        }
+    };
+
+    const updatePointerTarget = (clientX, clientY, active) => {
+        state.pointer.targetX = Math.max(0, Math.min(state.width, clientX));
+        state.pointer.targetY = Math.max(0, Math.min(state.height, clientY));
+        state.pointer.active = active;
+    };
+
+    const handlePointerMove = (event) => {
+        updatePointerTarget(event.clientX, event.clientY, true);
+    };
+
+    const handlePointerLeave = () => {
+        updatePointerTarget(state.width * 0.5, state.height * 0.45, false);
+    };
+
+    const handleTouchMove = (event) => {
+        if (!event.touches || !event.touches.length) return;
+        const touch = event.touches[0];
+        updatePointerTarget(touch.clientX, touch.clientY, true);
+    };
+
+    const handleTouchEnd = () => {
+        updatePointerTarget(state.width * 0.5, state.height * 0.45, false);
+    };
+
+    let resizeTimeout;
+    const handleResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            setupCanvas();
+        }, 150);
+    };
+
+    setupCanvas();
+    state.animationId = requestAnimationFrame(render);
+
+    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerleave', handlePointerLeave, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    document.addEventListener('visibilitychange', handleVisibility);
+}
+
+initLuxuryBackground();
+
 const menuToggle = document.querySelector('.menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -84,7 +338,7 @@ const modalNext = document.querySelector('#portfolioModal .modal-next');
 
 const portfolioData = [
     {
-        image: 'assets/portfolio-2.jpg',
+        image: 'assets/Desing Sombrancelha.jpeg',
         title: 'Design com Henna',
         description: 'Modelagem perfeita utilizando henna de alta qualidade. Resultado temporário ideal para quem deseja experimentar antes de procedimentos definitivos.'
     },
@@ -94,19 +348,19 @@ const portfolioData = [
         description: 'Antes e Depois impressionante que mostra a transformação completa. Lábios com mais cor, definição e aparência jovem, sem necessidade de maquiagem diária.'
     },
     {
-        image: 'assets/portfolio-4.jpg',
-        title: 'Delineado Permanente',
-        description: 'Olhar marcante e expressivo com delineado permanente. Resultado natural que valoriza o olhar sem exageros.'
+        image: 'assets/Micropigmentaçao de sombrancelha Hibrida Antes e Depois.jpeg',
+        title: 'Micropigmentação Híbrida',
+        description: 'Combinação da técnica fio a fio com sombreamento para um resultado preenchido, definido e harmonioso, mantendo a naturalidade.'
     },
     {
-        image: 'assets/portfolio-5.jpg',
+        image: 'assets/BBGLOW.jpeg',
         title: 'BB Glow',
         description: 'Pele iluminada, uniforme e radiante. Tratamento coreano que proporciona efeito de base natural, reduzindo imperfeições e promovendo luminosidade.'
     },
     {
-        image: 'assets/portfolio-6.jpg',
-        title: 'Microagulhamento',
-        description: 'Rejuvenescimento facial com microagulhamento. Estímulo de colágeno para pele mais firme, redução de cicatrizes e melhora significativa da textura.'
+        image: 'assets/Limpeza.jpeg',
+        title: 'Limpeza de Pele com Argiloterapia',
+        description: 'Protocolo de higienização profunda com ação terapêutica das argilas, promovendo equilíbrio da pele, redução da oleosidade e melhora da textura.'
     },
     {
         image: 'assets/Desing Sombrancelha.jpeg',
@@ -119,9 +373,9 @@ const portfolioData = [
         description: 'Antes e Depois impressionante. Transformação completa das sobrancelhas, mostrando como um bom design pode realçar toda a beleza do rosto e do olhar da cliente.'
     },
     {
-        image: 'assets/portfolio-8.jpg',
-        title: 'Peeling Químico',
-        description: 'Renovação celular profunda com peeling químico. Pele mais lisa, clara e rejuvenescida, com redução de manchas e sinais de idade.'
+        image: 'assets/Desing Sombrancelha Antes e Depois 2.jpeg',
+        title: 'Design Transformador',
+        description: 'Antes e Depois com harmonização completa das sobrancelhas, valorizando o olhar e destacando a simetria natural do rosto.'
     },
     {
         image: 'assets/Micropigmentaçao de sombrancelha Fio a Fio Antes e Depois.jpeg',
@@ -196,74 +450,6 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' && modalNext) modalNext.click();
 });
 
-// Testimonials Slider
-const testimonialsSlider = document.querySelector('.testimonials-slider');
-const testimonialCards = document.querySelectorAll('.testimonial-card');
-const sliderDotsContainer = document.querySelector('.slider-dots');
-const prevBtn = document.querySelector('.prev-btn');
-const nextBtn = document.querySelector('.next-btn');
-
-let currentSlide = 0;
-
-function getCardsPerView() {
-    return window.innerWidth > 968 ? 3 : 1;
-}
-
-function getTotalSlides() {
-    if (!testimonialCards.length) return 0;
-    return Math.ceil(testimonialCards.length / getCardsPerView());
-}
-
-function renderDots() {
-    if (!sliderDotsContainer) return;
-    sliderDotsContainer.innerHTML = '';
-
-    const total = getTotalSlides();
-    for (let i = 0; i < total; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if (i === currentSlide) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(i));
-        sliderDotsContainer.appendChild(dot);
-    }
-}
-
-function updateSlider() {
-    if (!testimonialsSlider || !testimonialCards.length) return;
-
-    const cardWidth = testimonialCards[0].offsetWidth;
-    const gap = 30;
-    const offset = -(currentSlide * (cardWidth + gap) * getCardsPerView());
-    testimonialsSlider.style.transform = `translateX(${offset}px)`;
-
-    document.querySelectorAll('.dot').forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
-    });
-}
-
-function goToSlide(index) {
-    const total = getTotalSlides();
-    if (!total) return;
-    currentSlide = ((index % total) + total) % total;
-    updateSlider();
-}
-
-if (prevBtn) {
-    prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
-}
-if (nextBtn) {
-    nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
-}
-if (testimonialsSlider && testimonialCards.length) {
-    renderDots();
-    updateSlider();
-    window.addEventListener('resize', () => {
-        currentSlide = 0;
-        renderDots();
-        updateSlider();
-    });
-}
-
 // Contact Form
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
@@ -298,9 +484,118 @@ const serviceModals = {
     'micropigmentacao-labial': document.getElementById('micropigmentacaoLabialModal')
 };
 
+const genericServiceModal = document.getElementById('genericServiceModal');
+const genericServiceImage = document.getElementById('genericServiceImage');
+const genericServiceTitle = document.getElementById('genericServiceTitle');
+const genericServiceIntro = document.getElementById('genericServiceIntro');
+const genericServiceBenefits = document.getElementById('genericServiceBenefits');
+
+const genericServiceData = {
+    'rejuvenescimento-facial': {
+        image: 'assets/BBGLOW.jpeg',
+        title: 'Rejuvenescimento Facial',
+        intro: 'Protocolo focado em revitalização da pele, melhora da firmeza e redução de sinais do tempo com técnicas seguras e personalizadas para cada tipo de pele.',
+        benefits: [
+            'Melhora da firmeza e elasticidade',
+            'Redução de linhas finas e aspecto cansado',
+            'Pele mais viçosa e iluminada',
+            'Estimula renovação celular e colágeno'
+        ]
+    },
+    'delineado-olhos': {
+        image: 'assets/Micropigmentaçao de sombrancelha Shadow Antes e Depois.jpeg',
+        title: 'Micropigmentação Delineado de Olhos',
+        intro: 'Procedimento de delineado permanente que valoriza o olhar com acabamento elegante e natural, ideal para quem busca praticidade no dia a dia.',
+        benefits: [
+            'Realce do olhar com efeito duradouro',
+            'Mais praticidade na rotina de maquiagem',
+            'Correção de pequenas assimetrias',
+            'Resultado personalizado conforme o estilo da cliente'
+        ]
+    },
+    'design-henna': {
+        image: 'assets/Desing Sombrancelha.jpeg',
+        title: 'Design com Henna',
+        intro: 'Design estratégico das sobrancelhas com aplicação de henna para destacar o formato, preencher falhas e entregar resultado imediato.',
+        benefits: [
+            'Preenchimento visual das falhas',
+            'Definição e harmonização do olhar',
+            'Resultado imediato',
+            'Excelente opção para testar formato'
+        ]
+    },
+    'bbglow': {
+        image: 'assets/BBGLOW.jpeg',
+        title: 'BB Glow',
+        intro: 'Tratamento coreano que promove efeito de pele uniforme e iluminada, reduzindo imperfeições e melhorando a aparência geral do rosto.',
+        benefits: [
+            'Melhora da luminosidade da pele',
+            'Tom mais uniforme',
+            'Redução visual de poros e manchas leves',
+            'Efeito de pele saudável e bem cuidada'
+        ]
+    },
+    'microagulhamento': {
+        image: 'assets/Limpeza.jpeg',
+        title: 'Microagulhamento',
+        intro: 'Técnica que estimula colágeno através de microperfurações controladas, melhorando textura da pele e auxiliando em cicatrizes e sinais de envelhecimento.',
+        benefits: [
+            'Estimula produção natural de colágeno',
+            'Melhora textura e firmeza da pele',
+            'Auxilia na redução de cicatrizes de acne',
+            'Potencializa absorção de ativos'
+        ]
+    },
+    'peeling': {
+        image: 'assets/WhatsApp Image 2026-02-06 at 11.49.29.jpeg',
+        title: 'Peeling',
+        intro: 'Procedimento de renovação celular que contribui para uma pele mais lisa, uniforme e com aparência rejuvenescida.',
+        benefits: [
+            'Renovação das camadas superficiais da pele',
+            'Auxilia no clareamento de manchas',
+            'Reduz oleosidade e melhora textura',
+            'Pele mais macia e revitalizada'
+        ]
+    },
+    'dermaplaning': {
+        image: 'assets/WhatsApp Image 2026-02-06 at 11.49.29.jpeg',
+        title: 'Dermaplaning',
+        intro: 'Esfoliação avançada que remove células mortas e pelos finos da face, deixando a pele extremamente macia e com brilho saudável.',
+        benefits: [
+            'Remoção de células mortas e penugem facial',
+            'Toque suave e acabamento uniforme',
+            'Favorece aplicação de maquiagem',
+            'Resultado imediato de pele radiante'
+        ]
+    }
+};
+
+function openGenericServiceModal(serviceKey) {
+    const data = genericServiceData[serviceKey];
+    if (!data || !genericServiceModal || !genericServiceImage || !genericServiceTitle || !genericServiceIntro || !genericServiceBenefits) return;
+
+    genericServiceImage.src = data.image;
+    genericServiceImage.alt = data.title;
+    genericServiceTitle.textContent = data.title;
+    genericServiceIntro.textContent = data.intro;
+
+    genericServiceBenefits.innerHTML = '';
+    data.benefits.forEach((benefit) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = benefit;
+        genericServiceBenefits.appendChild(listItem);
+    });
+
+    genericServiceModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
 function openServiceModal(serviceKey) {
     const serviceModal = serviceModals[serviceKey];
-    if (!serviceModal) return;
+    if (!serviceModal) {
+        openGenericServiceModal(serviceKey);
+        return;
+    }
 
     if (serviceKey === 'design-sombrancelha') {
         const images = serviceModal.querySelectorAll('.gallery-image');
