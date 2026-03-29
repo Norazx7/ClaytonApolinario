@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <canvas id="luxury-bg" aria-hidden="true"></canvas>
+
     <!-- Header -->
     <header id="header">
         <nav class="navbar">
@@ -26,6 +28,7 @@
                     <li><a href="#home">Início</a></li>
                     <li><a href="#about">Sobre</a></li>
                     <li><a href="#services">Procedimentos</a></li>
+                    <li><a href="#courses">Cursos</a></li>
                     <li><a href="#portfolio">Portfólio</a></li>
                     <li><a href="#testimonials">Depoimentos</a></li>
                     <li><a href="#contact">Contato</a></li>
@@ -41,7 +44,7 @@
             <div class="hero-text">
                 <h2 class="hero-title">Clayton Apolinário</h2>
                 <p class="hero-subtitle">Estética & Micropigmentação</p>
-                <p class="hero-description">Transformando beleza em arte através de técnicas avançadas e cuidado personalizado</p>
+                <p class="hero-description">Desde os 16 anos na área da beleza, transformando beleza em arte através de técnicas avançadas e cuidado personalizado.</p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">Agendar Consulta</a>
                     <a href="#portfolio" class="btn btn-secondary">Ver Trabalhos</a>
@@ -52,7 +55,7 @@
             </div>
         </div>
         <div class="scroll-indicator">
-            <a href="#about"><i class="fas fa-chevron-down"></i></a>
+            <a href="#about" aria-label="Ir para seção Sobre" title="Ir para seção Sobre"><i class="fas fa-chevron-down"></i></a>
         </div>
     </section>
 
@@ -68,8 +71,8 @@
                 <div class="about-image">
                     <img src="assets/clayton-profile.png" alt="Clayton Apolinário" class="about-img">
                     <div class="about-badge">
-                        <span class="badge-number">16</span>
-                        <span class="badge-text">Início na Área da Beleza</span>
+                        <span class="badge-number">Desde os 16</span>
+                        <span class="badge-text">anos na área da beleza</span>
                     </div>
                 </div>
                 <div class="about-text">
@@ -85,7 +88,7 @@
                             <i class="fas fa-certificate"></i>
                             <div>
                                 <h4>Formação Técnica</h4>
-                                <p>Master em Micropigmentação para sobrancelhas, olhos e lábios</p>
+                                <p>Master em Micropigmentação para sobrancelhas, olhos e lábios, com formação em Estética Facial</p>
                             </div>
                         </div>
                         <div class="credential-item">
@@ -113,7 +116,7 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Serviços</span>
-                <h2 class="section-title">Procedimentos Oferecidos</h2>
+                <h2 class="section-title">Procedimentos Principais</h2>
                 <div class="title-decoration"></div>
             </div>
             <div class="services-grid">
@@ -124,15 +127,6 @@
                     <h3>Limpeza de Pele com Argiloterapia</h3>
                     <p>Protocolo que une higienização profunda da pele com o poder terapêutico das argilas. Perfeita para quem quer tratar a pele de forma estética e terapêutica.</p>
                     <a href="#" class="service-link service-detail-btn" data-service="argiloterapia">Saiba mais <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <h3>Rejuvenescimento Facial</h3>
-                    <p>Técnicas avançadas para revitalizar a pele, reduzir sinais de idade e promover uma aparência jovem.</p>
-                    <a href="#contact" class="service-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
                 </div>
 
                 <div class="service-card service-card-design">
@@ -150,17 +144,8 @@
                         <i class="fas fa-paint-brush"></i>
                     </div>
                     <h3>Micropigmentação de Sobrancelhas</h3>
-                    <p>Design personalizado e técnica fio a fio para sobrancelhas perfeitas e naturais.</p>
+                    <p>Técnicas Fio a Fio, Híbrido e Shadow para sobrancelhas naturais, preenchidas e personalizadas.</p>
                     <a href="#" class="service-link service-detail-btn" data-service="micropigmentacao-sombrancelha">Saiba mais <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>Micropigmentação Delineado de Olhos</h3>
-                    <p>Realce natural do olhar com delineado permanente, prático e elegante.</p>
-                    <a href="#contact" class="service-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
                 </div>
 
                 <div class="service-card service-card-labial">
@@ -172,50 +157,64 @@
                     <a href="#" class="service-link service-detail-btn" data-service="micropigmentacao-labial">Saiba mais <i class="fas fa-arrow-right"></i></a>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h3>Design com Henna</h3>
-                    <p>Modelagem de sobrancelhas com henna, resultado temporário e perfeito.</p>
-                    <a href="#contact" class="service-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
-                </div>
-
-                <div class="service-card">
+                <div class="service-card service-card-bbglow">
                     <div class="service-icon">
                         <i class="fas fa-star"></i>
                     </div>
                     <h3>BB Glow</h3>
                     <p>Tratamento coreano para pele iluminada, uniforme e com efeito base natural.</p>
-                    <a href="#contact" class="service-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
+                    <a href="#" class="service-link service-detail-btn" data-service="bbglow">Saiba mais <i class="fas fa-arrow-right"></i></a>
                 </div>
+            </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-syringe"></i>
-                    </div>
-                    <h3>Microagulhamento</h3>
-                    <p>Estímulo de colágeno para rejuvenescimento, redução de cicatrizes e melhora da textura da pele.</p>
-                    <a href="#contact" class="service-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
-                </div>
+            <div class="other-services">
+                <h3>Outros Serviços</h3>
+                <p class="other-services-desc">Além dos procedimentos principais, também atendemos com técnicas complementares para personalizar o seu tratamento:</p>
+                <ul class="other-services-list">
+                    <li><strong>Rejuvenescimento Facial:</strong> revitalização da pele e redução de sinais de idade.</li>
+                    <li><strong>Micropigmentação Delineado de Olhos:</strong> realce natural e elegante do olhar.</li>
+                    <li><strong>Design com Henna:</strong> modelagem com preenchimento temporário para maior definição.</li>
+                    <li><strong>Microagulhamento:</strong> estímulo de colágeno e melhora da textura da pele.</li>
+                    <li><strong>Peeling:</strong> renovação celular para uma pele mais lisa e uniforme.</li>
+                    <li><strong>Dermaplaning:</strong> esfoliação avançada para toque macio e brilho natural.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-magic"></i>
-                    </div>
-                    <h3>Peeling</h3>
-                    <p>Renovação celular profunda para pele mais lisa, clara e rejuvenescida.</p>
-                    <a href="#contact" class="service-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
-                </div>
+    <!-- Courses Section -->
+    <section id="courses" class="courses">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Formação</span>
+                <h2 class="section-title">Cursos Disponíveis</h2>
+                <div class="title-decoration"></div>
+            </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-gem"></i>
+            <p class="courses-intro">Cursos disponíveis para iniciantes e para quem já trabalha na área e deseja se especializar.</p>
+
+            <div class="courses-grid">
+                <article class="course-card">
+                    <img src="assets/curso1.jpg" alt="Curso profissional de estética com Clayton Apolinário" class="course-image">
+                    <div class="course-content">
+                        <h3>Cursos disponíveis por Clayton Apolinário</h3>
+                        <ul class="course-list">
+                            <li>CURSO DE DESIGN DE SOBRANCELHAS</li>
+                            <li>CURSO DE MICROPIGMENTAÇÃO DE SOBRANCELHAS, OLHOS E LÁBIOS</li>
+                            <li>CURSO DE LIMPEZA DE PELE</li>
+                            <li>CURSO DE MENTORIA PARA INSTRUTORES (curso para quem quer aprender a ministrar curso)</li>
+                        </ul>
                     </div>
-                    <h3>Dermaplaning</h3>
-                    <p>Esfoliação avançada para remoção de pelos faciais e células mortas, revelando pele radiante.</p>
-                    <a href="#contact" class="service-link">Saiba mais <i class="fas fa-arrow-right"></i></a>
-                </div>
+                </article>
+
+                <article class="course-card">
+                    <img src="assets/curso2.jpg" alt="Turma em curso de especialização na área da estética" class="course-image">
+                    <div class="course-content">
+                        <h3>Formação prática e especializada</h3>
+                        <p>Treinamentos completos com foco em técnica, prática supervisionada e posicionamento profissional para atuar com segurança no mercado da estética.</p>
+                        <a href="#contact" class="btn btn-primary">Quero Saber Mais</a>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -239,7 +238,7 @@
 
             <div class="portfolio-grid">
                 <div class="portfolio-item" data-category="sobrancelhas">
-                    <img src="assets/portfolio-2.jpg" alt="Design de Sobrancelhas">
+                    <img src="assets/Desing Sombrancelha.jpeg" alt="Design de Sobrancelhas com Henna">
                     <div class="portfolio-overlay">
                         <h3>Design com Henna</h3>
                         <p>Modelagem perfeita</p>
@@ -256,17 +255,17 @@
                     </div>
                 </div>
 
-                <div class="portfolio-item" data-category="olhos">
-                    <img src="assets/portfolio-4.jpg" alt="Delineado de Olhos">
+                <div class="portfolio-item" data-category="sobrancelhas">
+                    <img src="assets/Micropigmentaçao de sombrancelha Hibrida Antes e Depois.jpeg" alt="Micropigmentação Híbrida Antes e Depois">
                     <div class="portfolio-overlay">
-                        <h3>Delineado Permanente</h3>
-                        <p>Olhar marcante</p>
+                        <h3>Micropigmentação Híbrida</h3>
+                        <p>Preenchimento com naturalidade</p>
                         <button class="portfolio-btn" data-index="2">Ver Detalhes</button>
                     </div>
                 </div>
 
                 <div class="portfolio-item" data-category="pele">
-                    <img src="assets/portfolio-5.jpg" alt="BB Glow">
+                    <img src="assets/BBGLOW.jpeg" alt="BB Glow">
                     <div class="portfolio-overlay">
                         <h3>BB Glow</h3>
                         <p>Pele iluminada e uniforme</p>
@@ -275,10 +274,10 @@
                 </div>
 
                 <div class="portfolio-item" data-category="pele">
-                    <img src="assets/portfolio-6.jpg" alt="Microagulhamento">
+                    <img src="assets/Limpeza.jpeg" alt="Limpeza de Pele com Argiloterapia">
                     <div class="portfolio-overlay">
-                        <h3>Microagulhamento</h3>
-                        <p>Rejuvenescimento facial</p>
+                        <h3>Limpeza de Pele</h3>
+                        <p>Tratamento profundo e terapêutico</p>
                         <button class="portfolio-btn" data-index="4">Ver Detalhes</button>
                     </div>
                 </div>
@@ -302,10 +301,10 @@
                 </div>
 
                 <div class="portfolio-item" data-category="pele">
-                    <img src="assets/portfolio-8.jpg" alt="Peeling">
+                    <img src="assets/Desing Sombrancelha Antes e Depois 2.jpeg" alt="Design de Sobrancelhas Antes e Depois">
                     <div class="portfolio-overlay">
-                        <h3>Peeling Químico</h3>
-                        <p>Renovação celular</p>
+                        <h3>Design Transformador</h3>
+                        <p>Antes e Depois com harmonização</p>
                         <button class="portfolio-btn" data-index="7">Ver Detalhes</button>
                     </div>
                 </div>
@@ -351,6 +350,7 @@
             
             <div class="testimonials-slider">
                 <div class="testimonial-card">
+                    <img src="assets/FeedBack 1.png" alt="Feedback de cliente 1" class="testimonial-feedback-img">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -360,15 +360,15 @@
                     </div>
                     <p class="testimonial-text">"Resultado incrível! Minhas sobrancelhas ficaram perfeitas e super naturais. O Clayton é muito atencioso e profissional. Recomendo demais!"</p>
                     <div class="testimonial-author">
-                        <img src="assets/client-1.jpg" alt="Mariana Silva">
                         <div>
-                            <h4>Mariana Silva</h4>
-                            <p>Micropigmentação de Sobrancelhas</p>
+                            <h4>Cliente Verificada</h4>
+                            <p>Feedback Real</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-card">
+                    <img src="assets/Feedback 2.png" alt="Feedback de cliente 2" class="testimonial-feedback-img">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -378,15 +378,15 @@
                     </div>
                     <p class="testimonial-text">"O tratamento de BB Glow mudou minha pele! Estava com manchas e textura irregular, agora minha pele está lisinha e iluminada. Obrigada, Clayton!"</p>
                     <div class="testimonial-author">
-                        <img src="assets/client-2.jpg" alt="Juliana Costa">
                         <div>
-                            <h4>Juliana Costa</h4>
-                            <p>BB Glow</p>
+                            <h4>Cliente Verificada</h4>
+                            <p>Feedback Real</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-card">
+                    <img src="assets/Feedback 3.png" alt="Feedback de cliente 3" class="testimonial-feedback-img">
                     <div class="stars">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -396,77 +396,12 @@
                     </div>
                     <p class="testimonial-text">"Profissional excepcional! Fiz micropigmentação labial e estou apaixonada pelo resultado. Ambiente limpo, confortável e atendimento de primeira."</p>
                     <div class="testimonial-author">
-                        <img src="assets/client-3.jpg" alt="Fernanda Oliveira">
                         <div>
-                            <h4>Fernanda Oliveira</h4>
-                            <p>Micropigmentação Labial</p>
+                            <h4>Cliente Verificada</h4>
+                            <p>Feedback Real</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="testimonial-card">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Fiz microagulhamento para cicatrizes de acne e os resultados foram surpreendentes! Minha pele melhorou muito. Clayton é muito cuidadoso e explica tudo."</p>
-                    <div class="testimonial-author">
-                        <img src="assets/client-4.jpg" alt="Patrícia Santos">
-                        <div>
-                            <h4>Patrícia Santos</h4>
-                            <p>Microagulhamento</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Melhor decisão foi fazer o delineado permanente! Acordo pronta todo dia. O trabalho do Clayton é impecável, super delicado e natural."</p>
-                    <div class="testimonial-author">
-                        <img src="assets/client-5.jpg" alt="Camila Rodrigues">
-                        <div>
-                            <h4>Camila Rodrigues</h4>
-                            <p>Delineado Permanente</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"O rejuvenescimento facial que fiz superou todas as expectativas. Minha pele está muito mais firme e jovem. Profissional top!"</p>
-                    <div class="testimonial-author">
-                        <img src="assets/client-6.jpg" alt="Ana Paula Martins">
-                        <div>
-                            <h4>Ana Paula Martins</h4>
-                            <p>Rejuvenescimento Facial</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slider-controls">
-                <button class="slider-btn prev-btn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="slider-dots"></div>
-                <button class="slider-btn next-btn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
             </div>
         </div>
     </section>
@@ -490,7 +425,7 @@
                             <i class="fas fa-phone"></i>
                             <div>
                                 <h4>Telefone / WhatsApp</h4>
-                                <a href="https://wa.me/5562991574187" target="_blank">(62) 99157-4187</a>
+                                <a href="https://wa.me/5562991574187" target="_blank" rel="noopener noreferrer">(62) 99157-4187</a>
                             </div>
                         </div>
                         
@@ -498,7 +433,7 @@
                             <i class="fas fa-envelope"></i>
                             <div>
                                 <h4>E-mail</h4>
-                                <a href="mailto:contato@claytonapolinario.com">contato@claytonapolinario.com</a>
+                                <a href="mailto:claytonap99@outlook.com">claytonap99@outlook.com</a>
                             </div>
                         </div>
                         
@@ -523,13 +458,13 @@
                     <div class="social-media">
                         <h4>Redes Sociais</h4>
                         <div class="social-links">
-                            <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                                 <i class="fab fa-facebook"></i>
                             </a>
-                            <a href="https://wa.me/5562991574187" target="_blank" aria-label="WhatsApp">
+                            <a href="https://wa.me/5562991574187" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                                 <i class="fab fa-whatsapp"></i>
                             </a>
                         </div>
@@ -603,6 +538,7 @@
                         <li><a href="#home">Início</a></li>
                         <li><a href="#about">Sobre</a></li>
                         <li><a href="#services">Procedimentos</a></li>
+                        <li><a href="#courses">Cursos</a></li>
                         <li><a href="#portfolio">Portfólio</a></li>
                         <li><a href="#contact">Contato</a></li>
                     </ul>
@@ -627,7 +563,7 @@
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <a href="mailto:contato@claytonapolinario.com">contato@claytonapolinario.com</a>
+                            <a href="mailto:claytonap99@outlook.com">claytonap99@outlook.com</a>
                         </li>
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
@@ -640,13 +576,13 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 Clayton Apolinário. Todos os direitos reservados.</p>
                 <div class="footer-social">
-                    <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                         <i class="fab fa-facebook"></i>
                     </a>
-                    <a href="https://wa.me/5562991574187" target="_blank" aria-label="WhatsApp">
+                    <a href="https://wa.me/5562991574187" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>
@@ -655,7 +591,7 @@
     </footer>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/5562991574187" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <a href="https://wa.me/5562991574187" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -676,8 +612,8 @@
                 </div>
             </div>
             <div class="modal-nav">
-                <button class="modal-prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="modal-next"><i class="fas fa-chevron-right"></i></button>
+                <button class="modal-prev" aria-label="Imagem anterior" title="Imagem anterior"><i class="fas fa-chevron-left"></i></button>
+                <button class="modal-next" aria-label="Próxima imagem" title="Próxima imagem"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </div>
@@ -736,9 +672,9 @@
             <div class="modal-body">
                 <div class="design-gallery">
                     <img src="assets/Desing Sombrancelha.jpeg" alt="Design de Sobrancelhas" class="service-modal-img gallery-image">
-                    <img src="assets/Desing Sombrancelha Antes e Depois.jpeg" alt="Design de Sobrancelhas Antes e Depois" class="service-modal-img gallery-image" style="display: none;">
-                    <button class="gallery-prev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="gallery-next"><i class="fas fa-chevron-right"></i></button>
+                    <img src="assets/Desing Sombrancelha Antes e Depois.jpeg" alt="Design de Sobrancelhas Antes e Depois" class="service-modal-img gallery-image is-hidden">
+                    <button class="gallery-prev" aria-label="Imagem anterior" title="Imagem anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="gallery-next" aria-label="Próxima imagem" title="Próxima imagem"><i class="fas fa-chevron-right"></i></button>
                     <div class="gallery-indicators">
                         <span class="indicator active" data-index="0"></span>
                         <span class="indicator" data-index="1"></span>
@@ -751,7 +687,7 @@
                         <h4><i class="fas fa-wand-magic-sparkles"></i> Sem Henna</h4>
                         <p class="intro-text">O design de sobrancelhas é um procedimento estético que tem como objetivo modelar e harmonizar as sobrancelhas de acordo com o formato do rosto e dos olhos da cliente. Ele é feito através da retirada estratégica dos pelos (com pinça, cera ou linha), respeitando a anatomia natural da sobrancelha.</p>
                         
-                        <h5 style="color: var(--gold); margin-top: 15px; margin-bottom: 10px;">✅ Benefícios:</h5>
+                        <h5 class="section-subtitle-spaced">✅ Benefícios:</h5>
                         <ul class="benefits-list">
                             <li>Realça o olhar</li>
                             <li>Corrige falhas visuais</li>
@@ -761,13 +697,13 @@
                         </ul>
                     </div>
 
-                    <div class="service-section" style="border-top: 2px solid rgba(212, 175, 55, 0.2); padding-top: 25px; margin-top: 25px;">
+                    <div class="service-section service-section-divider-lg">
                         <h4><i class="fas fa-paint-brush"></i> Com Henna</h4>
                         <p class="intro-text">O design com henna é o mesmo processo de mapeamento e modelagem das sobrancelhas, porém com a aplicação de henna vegetal após o design, que tem a função de pigmentar temporariamente a pele e os fios.</p>
                         
-                        <p style="color: var(--text-gray); font-size: 0.95rem; margin-bottom: 15px;"><strong>Indicada para:</strong> Sobrancelhas com falhas, ralas, ou para quem deseja mais definição. Perfeito para testar um formato antes da micropigmentação.</p>
+                        <p class="text-muted-small"><strong>Indicada para:</strong> Sobrancelhas com falhas, ralas, ou para quem deseja mais definição. Perfeito para testar um formato antes da micropigmentação.</p>
                         
-                        <h5 style="color: var(--gold); margin-bottom: 10px;">✅ Benefícios:</h5>
+                        <h5 class="section-subtitle">✅ Benefícios:</h5>
                         <ul class="benefits-list">
                             <li>Preenche falhas</li>
                             <li>Efeito de sobrancelha mais cheia</li>
@@ -791,28 +727,47 @@
             <button class="modal-close">&times;</button>
             <div class="modal-body">
                 <div class="micropig-gallery">
-                    <img src="assets/Micropigmentaçao de sombrancelha.jpeg" alt="Micropigmentação de Sobrancelhas" class="service-modal-img gallery-image micropig-image-1">
-                    <img src="assets/Micropigmentaçao de sombrancelha Shadow Antes e Depois.jpeg" alt="Micropigmentação Shadow Powder" class="service-modal-img gallery-image micropig-image-2" style="display: none;">
-                    <button class="gallery-prev micropig-prev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="gallery-next micropig-next"><i class="fas fa-chevron-right"></i></button>
+                    <img src="assets/Micropigmentaçao de sombrancelha Fio a Fio Antes e Depois.jpeg" alt="Micropigmentação Fio a Fio" class="service-modal-img gallery-image micropig-image-1">
+                    <img src="assets/Micropigmentaçao de sombrancelha Hibrida Antes e Depois.jpeg" alt="Micropigmentação Híbrida" class="service-modal-img gallery-image micropig-image-2 is-hidden">
+                    <img src="assets/Micropigmentaçao de sombrancelha Shadow Antes e Depois.jpeg" alt="Micropigmentação Shadow Powder" class="service-modal-img gallery-image micropig-image-3 is-hidden">
+                    <button class="gallery-prev micropig-prev" aria-label="Imagem anterior" title="Imagem anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="gallery-next micropig-next" aria-label="Próxima imagem" title="Próxima imagem"><i class="fas fa-chevron-right"></i></button>
                     <div class="gallery-indicators micropig-indicators">
-                        <span class="indicator micropig-indicator" data-index="0" data-tech="shadow-hibrido"></span>
-                        <span class="indicator micropig-indicator" data-index="1" data-tech="shadow"></span>
+                        <span class="indicator micropig-indicator" data-index="0" data-tech="fio-a-fio"></span>
+                        <span class="indicator micropig-indicator" data-index="1" data-tech="hibrido"></span>
+                        <span class="indicator micropig-indicator" data-index="2" data-tech="shadow"></span>
                     </div>
                 </div>
                 <div class="modal-info service-modal-info">
                     <h3>Micropigmentação de Sobrancelhas</h3>
                     
-                    <p class="intro-text">A micropigmentação de sobrancelhas é um procedimento semi-permanente que utiliza pigmentos especiais para criar sobrancelhas perfeitas. Confira nossas duas principais técnicas.</p>
+                    <p class="intro-text">A micropigmentação de sobrancelhas é um procedimento semi-permanente que utiliza pigmentos especiais para criar sobrancelhas perfeitas. Confira nossas três principais técnicas.</p>
 
                     <!-- Técnica 1 -->
-                    <div class="service-section tech-section tech-shadow-hibrido active">
+                    <div class="service-section tech-section tech-fio-a-fio active">
+                        <div class="tech-header">
+                            <h4><i class="fas fa-feather"></i> Fio a Fio</h4>
+                            <span class="tech-indicator">Técnica Realista</span>
+                        </div>
+                        <p class="text-muted-top">A técnica fio a fio simula os pelos naturais da sobrancelha, criando um resultado extremamente discreto, elegante e natural.</p>
+                        <h5 class="section-subtitle-spaced">✅ Características:</h5>
+                        <ul class="benefits-list">
+                            <li>Simula fios naturais</li>
+                            <li>Resultado leve e sofisticado</li>
+                            <li>Ideal para correção de falhas</li>
+                            <li>Efeito bem natural</li>
+                            <li>Duração 12-18 meses</li>
+                        </ul>
+                    </div>
+
+                    <!-- Técnica 2 -->
+                    <div class="service-section tech-section tech-hibrido">
                         <div class="tech-header">
                             <h4><i class="fas fa-wand-magic-sparkles"></i> Híbrido</h4>
                             <span class="tech-indicator">Técnica Mista</span>
                         </div>
-                        <p style="color: var(--text-gray); margin-top: 10px;">Combina a técnica fio a fio com sombra para criar um efeito mais preenchido e definido. Perfeita para quem deseja sobrancelhas mais marcantes e volumosas com aspecto natural.</p>
-                        <h5 style="color: var(--gold); margin-top: 15px; margin-bottom: 10px;">✅ Características:</h5>
+                        <p class="text-muted-top">Combina a técnica fio a fio com sombra para criar um efeito mais preenchido e definido. Perfeita para quem deseja sobrancelhas mais marcantes e volumosas com aspecto natural.</p>
+                        <h5 class="section-subtitle-spaced">✅ Características:</h5>
                         <ul class="benefits-list">
                             <li>Efeito preenchido e marcante</li>
                             <li>Combina fios e sombra</li>
@@ -822,14 +777,14 @@
                         </ul>
                     </div>
 
-                    <!-- Técnica 2 -->
+                    <!-- Técnica 3 -->
                     <div class="service-section tech-section tech-shadow">
                         <div class="tech-header">
                             <h4><i class="fas fa-brush"></i> Shadow</h4>
                             <span class="tech-indicator">Técnica Maquiada</span>
                         </div>
-                        <p style="color: var(--text-gray); margin-top: 10px;">A técnica shadow cria um efeito como se a sobrancelha tivesse sido maquiada com pó. Ideal para pele oleosa e quem quer um resultado bem preenchido, pigmentado e duradouro.</p>
-                        <h5 style="color: var(--gold); margin-top: 15px; margin-bottom: 10px;">✅ Características:</h5>
+                        <p class="text-muted-top">A técnica shadow cria um efeito como se a sobrancelha tivesse sido maquiada com pó. Ideal para pele oleosa e quem quer um resultado bem preenchido, pigmentado e duradouro.</p>
+                        <h5 class="section-subtitle-spaced">✅ Características:</h5>
                         <ul class="benefits-list">
                             <li>Efeito maquiagem perfeita</li>
                             <li>Resultado bem preenchido</li>
@@ -839,7 +794,7 @@
                         </ul>
                     </div>
 
-                    <div class="service-cta" style="margin-top: 30px;">
+                    <div class="service-cta service-cta-compact">
                         <a href="#contact" class="btn btn-primary">Agendar Consulta</a>
                     </div>
                 </div>
@@ -854,9 +809,9 @@
             <div class="modal-body">
                 <div class="labial-gallery">
                     <img src="assets/Micropigmentaçao Labial Capa.jpeg" alt="Micropigmentação Labial" class="service-modal-img gallery-image labial-image-1">
-                    <img src="assets/Micropigmentaçao Labial Antes e Depois.jpeg" alt="Micropigmentação Labial Antes e Depois" class="service-modal-img gallery-image labial-image-2" style="display: none;">
-                    <button class="gallery-prev labial-prev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="gallery-next labial-next"><i class="fas fa-chevron-right"></i></button>
+                    <img src="assets/Micropigmentaçao Labial Antes e Depois.jpeg" alt="Micropigmentação Labial Antes e Depois" class="service-modal-img gallery-image labial-image-2 is-hidden">
+                    <button class="gallery-prev labial-prev" aria-label="Imagem anterior" title="Imagem anterior"><i class="fas fa-chevron-left"></i></button>
+                    <button class="gallery-next labial-next" aria-label="Próxima imagem" title="Próxima imagem"><i class="fas fa-chevron-right"></i></button>
                     <div class="gallery-indicators labial-indicators">
                         <span class="indicator labial-indicator" data-index="0"></span>
                         <span class="indicator labial-indicator" data-index="1"></span>
@@ -882,8 +837,31 @@
                         </ul>
                     </div>
 
-                    <div class="service-section" style="border-top: 2px solid rgba(212, 175, 55, 0.2); padding-top: 20px; margin-top: 20px;">
-                        <p style="color: var(--text-light); font-style: italic; color: var(--text-gray);">O resultado é sutil, elegante e personalizado conforme o tom de pele e o gosto da cliente, promovendo mais autoestima e praticidade no dia a dia. 💋✨</p>
+                    <div class="service-section service-section-divider-sm">
+                        <p class="text-muted-italic">O resultado é sutil, elegante e personalizado conforme o tom de pele e o gosto da cliente, promovendo mais autoestima e praticidade no dia a dia. 💋✨</p>
+                    </div>
+
+                    <div class="service-cta">
+                        <a href="#contact" class="btn btn-primary">Agendar Consulta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Service Modal -->
+    <div id="genericServiceModal" class="modal">
+        <div class="modal-content service-modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-body">
+                <img id="genericServiceImage" src="assets/BBGLOW.jpeg" alt="Procedimento" class="service-modal-img">
+                <div class="modal-info service-modal-info">
+                    <h3 id="genericServiceTitle">Procedimento</h3>
+                    <p id="genericServiceIntro" class="intro-text"></p>
+
+                    <div class="service-section">
+                        <h4><i class="fas fa-check-circle"></i> Benefícios</h4>
+                        <ul id="genericServiceBenefits" class="benefits-list"></ul>
                     </div>
 
                     <div class="service-cta">
